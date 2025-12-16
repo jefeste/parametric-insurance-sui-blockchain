@@ -36,23 +36,23 @@ Meanwhile the pooled funds are being invested through DeFi. In the long run, we 
 
 
 
-# principales fonctions 
+# Main functions 
 
-## modifier du package  en live
+## Modifying package live
 ```
 sui client call --package <package_id> --module transfer_nft --function claim_publisher --args <upgrade_cap_object_id>
 
 ```
 
 
-## transferpolicy
+## Transferpolicy
 ```
 sui client call --package 0x2 --module transfer_policy --function default --type-args 0xa38696917fd033a9fba4b7c0904e81e49bf1dbccab9f7a5e8b48e8141c15a3d1::transfer_nft::TransferRight --args <publisher_object_id>
 
 
 ```
 
-## bruler le nft et se faire rembourser 
+## Burning the NFT for reimbursement 
 
 ```
 - Appelle simplement la fonction avec les deux IDs:
