@@ -1,37 +1,19 @@
-Presentation V3 in English:
+# SuInsure
 
-Slide – Presentation
+**SuInsure** is a decentralized parametric insurance platform built on the Sui blockchain. Our goal is simple: to replace slow, manual insurance claims with instant, automated payouts. By using smart contracts instead of bureaucratic processes, we offer financial protection that is transparent, fast, and accessible to everyone.
 
-Hi, I’m Jérémy Digard, and I worked on researching the idea and the move coding.
+## How It Works
+SuInsure operates on a "parametric" model, which means payouts are triggered by data, not opinions.
+* **Automatic Triggers:** Our smart contracts monitor real-world data via oracles (like local weather reports for farmers or economic stats for businesses).
+* **Instant Payouts:** As soon as a specific threshold is crossed—for example, if rainfall drops below a certain level—compensation is sent directly to the insured user's wallet.
+* **No Paperwork:** Because the trigger is mathematical and automatic, there is no need to file a claim or wait months for approval. This is critical for businesses with low cash reserves or farmers facing immediate climate risks.
 
-And I’m Robin Sanders. I worked on the website and the design.
+## Key Features
 
-⸻
-
-Slide – Intro
-
-SuInsure is a parametric insurance.
-So what does this mean?: as soon as a measured indicator crosses a set threshold, compensation is triggered automatically. Meanwhile, DeFi puts the premiums to work (mutual fund).
-
-Our objectives: fast compensation, trust by proof (not by promise), and easy secure access from anywhere in the world.
-
-
-⸻
-
-Slide – How it works (+ the demo)
-ajouter une preuve qui vient de la blockchain 
-
-The process happens through Slush, which offers great flexibility: either a simple connection with a zk-login account, or maximum security with a hot or cold wallet.
-
-The insured customer selects a coverage, pays the premium, and it’s done — way faster than traditional insurance!
-
-In addition, they will immediately receive proof of insurance: an on-chain NFT certificate that is traceable and tamper-proof.
-
-Once the contract is set in place, an Oracle continuously checks public data. And if the threshold for the parameter is reached? The compensation goes straight to their wallet.
-
-Meanwhile the pooled funds are being invested through DeFi. In the long run, we could operate through our own Sui validator node for optimal security.
-
-
+* **NFT Policy Certificates:** When you purchase coverage, you instantly receive an NFT. This serves as your digital policy—a traceable, tamper-proof proof of insurance that lives on-chain.
+* **Working Capital (DeFi):** Unlike traditional insurance where premiums often sit idle, SuInsure actively manages pooled funds using DeFi protocols. This generates yield like a mutual fund, maximizing returns and ensuring the stability of the risk pool.
+* **Built for Speed:** Leveraging the Sui blockchain’s parallel execution, our payouts happen in seconds with predictable fees, ensuring you get funds exactly when you need them.
+* **Universal Access with Slush:** We built SuInsure to help the unbanked and those without traditional financial access. Through our integration with **Slush**, users can connect easily using standard crypto wallets or simple social logins (zkLogin), removing the barriers of traditional banking.
 
 
 
@@ -313,52 +295,3 @@ sui client call --package <new_package_id> --module transfer_nft --function mint
 - EALREADY_USED: if the NFT has already been used.
 - EINSUFFICIENT_FUNDS: if the treasury has a balance < 0.1 SUI.
 
-
-⸻
-
-Slide – Accessible everywhere
-
-Why does insurance need to be universal? 
-
-Climate change increased farmers’ losses: last year, 1 hundred 23 billion dollars worth of crops are lost— that’s only the beginning. Crop failure is no longer a risk that can be ignored.
-Source (https://wfdfi.org/wp-content/uploads/2025/01/116.-The-impact-of-disasters-on-agriculture-and-food-security.pdf)
-
-Take Julius, a farmer living in Malawi who is unbanked.
-With Suinsure, he could have been compensated for losing his tomato crops to the drought (draowt) this summer. By subscribing to insurance, he would avoid falling into a spiral of debt.
-
-Source (https://www.theguardian.com/world/2025/aug/23/water-malawai-drought-climate-crisis)
-
-(Include Julius’s photo from the article in the slides, with a caption to show he’s a real person, not invented.)
-
-The worst part? 50% of farmers remain unbanked, Julius’s case is only one of many.
-Our goal is to make insurance coverage accessible for everyone, everywhere using the blockchain!
-
-⸻
-
-Slide – Fast reimbursement
-
-Another great advantage of Suinsure is the speed of compensation. You might be asking yourself why speed of compensation is so important?
-
-In the U.S., for example, more than 110 thousand restaurants closed in 2020 due to Covid 19. Why?, you may ask: restaurants have only about 16 days of cash reserves on median. Waiting 60 to 90 days for compensation isn’t a possibility for most. A faster insurance would make a massive difference, avoiding large scale losses of small businesses.
-
-As you know, Sui has ultra-low latency in its transactions, just under 300 thousand per second. This means that even in times of saturation, compensation payments will be able to go through smoothly, with predictable fees.
-
-
-
-⸻
-
-Conclusion:
-
-
-Thanks to the Sui blockchain, Suinsure takes parametric insurance to a whole new level of efficiency, optimizing accessibility, speed and trust. In addition, DeFi guarantees stable revenue, increasing the profit and decreasing the risk. All of these attributes serve as a motor for large scale adoption.
-
-
-
-
-
-
-⸻
-
-Project “limits” (find a more positive word for the slides)
-
-projet : concurents 
