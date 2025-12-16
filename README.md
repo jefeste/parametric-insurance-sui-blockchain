@@ -55,9 +55,9 @@ sui client call --package 0x2 --module transfer_policy --function default --type
 ## Burning the NFT for reimbursement 
 
 ```
-- Appelle simplement la fonction avec les deux IDs:
-    - nft_id: l’ID de ton TransferRight (sera consommé/brûlé)
-    - treasury_id: l’ID de l’objet Treasury (shared)
+- Simply call the function with the two IDs:
+    - nft_id: ID of the TransferRight (will be consumed/burnt)
+    - treasury_id: ID of the Treasury object (shared)
       
       
 sui client call \
@@ -68,7 +68,7 @@ sui client call \
   --gas-budget 10000000
 ```
 
-## alimenter la trésorerie 
+## Supplying the Treasury
 ```
 --package  package \
   --module transfer_nft \
@@ -80,7 +80,7 @@ sui client call \
 ```
 
 
-## créer le nft
+## Creating the NFT
 ```
 sui client call \
   --package <package_id> \
@@ -91,7 +91,7 @@ sui client call \
 ```
 
 
-# créer le nft associé au kiosk 
+# Creating the NFT associated to the kiosk 
 ```
 sui client call --package <new_package_id> --module transfer_nft --function mint_transfer_right_for_kiosk --args <kiosk_object_id> <kiosk_owner_cap_id> <recipient_address>
 
@@ -103,7 +103,7 @@ sui client call --package <new_package_id> --module transfer_nft --function mint
 
 
 
-# initialisation contract 
+# Initialisation contract 
 ```
 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ Transaction Data                                                                                             │
@@ -262,70 +262,56 @@ sui client call --package <new_package_id> --module transfer_nft --function mint
 
 ```
 
+# Functioning
 
+## How execute_and_burn_transfer(TransferRight, &mut Treasury, ctx) -> Coin<SUI> works and executes.
 
+### What the function does
 
+- Verifies that the caller is the owner of the NFT and that it hasn't already been used.
+- Verifies that the shared treasury has at least 0.1 SUI.
+- Debits 0.1 SUI from the treasury and creates a Coin<SUI> “payment”.
+- Burns the NFT (deletes the object).
+- Emits the TransferExecuted event.
+- Returns the Coin<SUI> “payment” to the caller.
 
+### Prerequisites
 
+- Have the ID of the TransferRight NFT you own: `sui client objects --owner <your_address>` then locate the type `<pkg>::transfer_nft::TransferRight`.
+- Have the ID of the shared treasury (Treasury). If you just published, retrieve it via the event:
+    - `sui client event --query 'MoveEventType = "<pkg>::transfer_nft::TreasuryCreated"' --limit 1`
+    - Or list the shared object if you already know the ID.
 
-# fonctionnement 
+### Execution via CLI
 
-Voici comment fonctionne et s’exécute execute_and_burn_transfer(TransferRight, &mut Treasury, ctx) -> Coin<SUI>.
+- Simply call the function with the two IDs:
+    - nft_id: the ID of your TransferRight (will be consumed/burned)
+    - treasury_id: the ID of the Treasury object (shared)
+- Command:
+    - `sui client call --package <pkg> --module transfer_nft --function execute_and_burn_transfer --args <nft_id> <treasury_id> --gas-budget 10000000`
+- Result:
+    - The transaction creates a Coin<SUI> of 0.1 SUI in your possession. You will see the ID in “Created Objects” with Owner = your address.
+    - The NFT no longer exists (it has been destroyed).
+    - A TransferExecuted event is emitted.
 
-Ce que fait la fonction
+### After the call
 
-- Vérifie que l’appelant est bien owner du NFT et qu’il n’a pas déjà été utilisé.
-- Vérifie que la trésorerie partagée a au moins 0.1 SUI.
-- Débite 0.1 SUI de la trésorerie et crée un Coin<SUI> “payment”.
-- Brûle le NFT (supprime l’objet).
-- Émet l’évènement TransferExecuted.
-- Retourne le Coin<SUI> “payment” au caller.
+- Retrieve the ID of the created coin in “Created Objects”.
+- Optional: merge the payment with another coin or transfer it:
+    - Merge: `sui client merge-coin --primary-coin <target_coin_id> --coin-to-merge <payment_coin_id> --gas-budget 10000000`
+    - Transfer: `sui client transfer-coin --to <dest_addr> --coin-object-id <payment_coin_id> --gas-budget 10000000`
 
-Pré‑requis
+### Execution in a PTB (JS/TS)
 
-- Avoir l’ID du NFT TransferRight que tu possèdes: sui client objects --owner <ton_adresse> puis repérer le type <pkg>::transfer_nft::TransferRight.
-- Avoir l’ID de la trésorerie partagée (Treasury). Si tu viens de publier, récupère-le via l’évènement:
-    - sui client event --query 'MoveEventType = "<pkg>::transfer_nft::TreasuryCreated"' --limit 1
-    - ou liste l’objet partagé si tu connais déjà l’ID.
+- To chain the call and the transfer in a single transaction:
+    - `const payment = tx.moveCall({ target: "<pkg>::transfer_nft::execute_and_burn_transfer", arguments: [tx.object(nftId), tx.object(treasuryId)] });`
+    - `tx.transferObjects([payment], tx.pure.address(recipient));`
 
-Exécution via le CLI
+### Possible Errors
 
-- Appelle simplement la fonction avec les deux IDs:
-    - nft_id: l’ID de ton TransferRight (sera consommé/brûlé)
-    - treasury_id: l’ID de l’objet Treasury (shared)
-- Commande:
-    - sui client call --package <pkg> --module transfer_nft --function execute_and_burn_transfer --args <nft_id> <treasury_id> --gas-budget 10000000
-- Résultat:
-    - La transaction crée un Coin<SUI> de 0.1 SUI en ta possession. Tu verras l’ID dans “Created Objects” avec Owner = ton adresse.
-    - Le NFT n’existe plus (il a été détruit).
-    - Un évènement TransferExecuted est émis.
-
-Après l’appel
-
-- Récupère l’ID du coin créé dans “Created Objects”.
-- Optionnel: fusionne le paiement avec un autre coin ou transfère-le:
-    - Merge: sui client merge-coin --primary-coin <target_coin_id> --coin-to-merge <payment_coin_id> --gas-budget 10000000
-    - Transfert: sui client transfer-coin --to <dest_addr> --coin-object-id <payment_coin_id> --gas-budget 10000000
-
-Exécution dans un PTB (JS/TS)
-
-- Pour enchaîner l’appel et le transfert dans une seule transaction:
-    - const payment = tx.moveCall({ target: "<pkg>::transfer_nft::execute_and_burn_transfer", arguments: [tx.object(nftId), tx.object(treasuryId)] });
-    - tx.transferObjects([payment], tx.pure.address(recipient));
-
-Erreurs possibles
-
-- ENOT_NFT_OWNER si tu n’es pas propriétaire du NFT.
-- EALREADY_USED si le NFT a déjà été utilisé.
-- EINSUFFICIENT_FUNDS si la trésorerie a un solde < 0.1 SUI.
-
-
-
-
-
-
-
-
+- ENOT_NFT_OWNER: if you are not the owner of the NFT.
+- EALREADY_USED: if the NFT has already been used.
+- EINSUFFICIENT_FUNDS: if the treasury has a balance < 0.1 SUI.
 
 
 ⸻
