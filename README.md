@@ -5,7 +5,7 @@
 ## How It Works
 SuInsure operates on a "parametric" model, which means payouts are triggered by data, not opinions.
 * **Automatic Triggers:** Our smart contracts monitor real-world data via oracles (like local weather reports for farmers or economic stats for businesses).
-* **Instant Payouts:** As soon as a specific threshold is crossed—for example, if rainfall drops below a certain level—compensation is sent directly to the insured user's wallet.
+* **Instant Payouts:** As soon as a specific threshold is crossed, (for example, if rainfall drops below a certain level) compensation is sent directly to the insured user's wallet.
 * **No Paperwork:** Because the trigger is mathematical and automatic, there is no need to file a claim or wait months for approval. This is critical for businesses with low cash reserves or farmers facing immediate climate risks.
 
 ## Key Features
